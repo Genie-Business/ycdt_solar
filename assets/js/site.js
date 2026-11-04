@@ -1,22 +1,8 @@
-/* =====================================================================
- * YCDT Solar — site script
- * ---------------------------------------------------------------------
- * SITE SETTINGS — fill these in before going live.
- *  email        : shown on the site and used as the mail fallback for enquiries
- *  phone        : shown on the site (international format, e.g. "+234 800 000 0000")
- *  whatsapp     : digits only with country code, e.g. "2348000000000"
- *  formEndpoint : where the enquiry form POSTs JSON (e.g. a Formspree URL
- *                 "https://formspree.io/f/xxxxxxx"). When empty, the form
- *                 falls back to opening an email, then WhatsApp.
- * ===================================================================== */
-var SITE = {
-  email: "",
-  phone: "",
-  whatsapp: "",
-  formEndpoint: ""
-};
+/* YCDT Solar site script. Contact settings live in assets/js/settings.js (editable from /admin.html). */
+var SITE = window.SITE || {};
 
 (function () {
+  if (window.__ADMIN) return;   // the page is open in the admin editor: leave the DOM untouched
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };

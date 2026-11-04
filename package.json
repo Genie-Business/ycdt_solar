@@ -1,0 +1,7 @@
+{
+  "name": "ycdt-solar-website",
+  "private": true,
+  "type": "module",
+  "description": "Static site with a small admin API for Vercel. No build step and no dependencies.",
+  "engines": { "node": ">=18" }
+}

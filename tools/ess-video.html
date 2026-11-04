@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>500 kW container video renderer</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,700;1,6..72,500&display=swap">
+<style>body{margin:0;background:#eee;font:14px sans-serif}canvas{display:block;max-width:100%}#gl{position:absolute;left:-9999px}</style>
+</head>
+<body>
+<!--
+  Renders the 500 kW containerised ESS animation.
+  Preview: open this page, append ?t=12.5 to see a single frame at 12.5 s.
+  Render:  window.renderVideo() encodes H.264 in the browser and returns the MP4 bytes as a Blob.
+-->
+<canvas id="out" width="1280" height="720"></canvas>
+<canvas id="gl"></canvas>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+  "mp4-muxer": "https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.mjs"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const W = 1280, H = 720, FPS = 30, DUR = 26;
+const out = document.getElementById('out'), ctx = out.getContext('2d');
+const RED = '#c8202f', ORANGE = '#c5662f', INK = '#17171a', MUTED = '#5a5a61';
+
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gl'), antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NeutralToneMapping ?? THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setClearColor(0xffffff, 1);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
+const pm = new THREE.PMREMGenerator(renderer);
+scene.environment = pm.fromScene(new RoomEnvironment(renderer), .04).texture;
+const camera = new THREE.PerspectiveCamera(30, W / H, .1, 100);
+
+const sun = new THREE.DirectionalLight(0xfff4e6, 1.05);
+sun.position.set(4, 9, 7); sun.castShadow = true;
+sun.shadow.mapSize.set(4096, 4096);
+Object.assign(sun.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 1, far: 25 });
+sun.shadow.bias = -.0004; sun.shadow.normalBias = .015; sun.shadow.radius = 5;
+scene.add(sun);
+
+/* ---------- helpers ---------- */
+const L = 6.06, HT = 2.6, D = 2.44;           // 20 ft container, metres
+const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: .62, metalness: 0, envMapIntensity: .6, ...o });
+const WHITE = mat(0xf4f5f6), WALL = mat(0xeef0f2), FLOOR = mat(0xe6e8ea, { roughness: .35 }), REDM = mat(0x9c1520, { roughness: .4 }), DARK = mat(0x2a2c31);
+const GREY = mat(0xd4d7db);
+function box(w, h, d, m, x, y, z, parent) {
+  const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m);
+  b.position.set(x, y, z); b.castShadow = b.receiveShadow = true;
+  (parent || scene).add(b); return b;
+}
+function canvasTex(cw, ch, draw) {
+  const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+  draw(c.getContext('2d'), cw, ch);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+/* box with a printed front (+z) face */
+function faced(w, h, d, tex, x, y, z, parent, side = WHITE) {
+  const front = new THREE.MeshStandardMaterial({ map: tex, roughness: .55, envMapIntensity: .6 });
+  const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), [side, side, side, side, front, side]);
+  b.position.set(x, y, z); b.castShadow = b.receiveShadow = true;
+  (parent || scene).add(b); return b;
+}
+function corrugated(len, height, m, parent) {           // profile along x, extruded along y
+  const s = new THREE.Shape(), pitch = .27, a = .036, n = Math.round(len / pitch);
+  s.moveTo(-len / 2, 0);
+  for (let i = 0; i < n; i++) {
+    const x = -len / 2 + i * pitch;
+    s.lineTo(x + pitch * .18, a); s.lineTo(x + pitch * .5, a); s.lineTo(x + pitch * .68, 0); s.lineTo(x + pitch, 0);
+  }
+  s.lineTo(len / 2, -.02); s.lineTo(-len / 2, -.02); s.closePath();
+  const g = new THREE.ExtrudeGeometry(s, { depth: height, bevelEnabled: false });
+  g.rotateX(-Math.PI / 2);                               // extrude up, profile faces +z... flatten below
+  const me = new THREE.Mesh(g, m); me.castShadow = me.receiveShadow = true;
+  // ExtrudeGeometry after rotateX: y up = height, profile bumps along -z; flip so ribs face out
+  (parent || scene).add(me); return me;
+}
+const hl = new Map();    // component id -> meshes that glow when highlighted
+function tag(id, ...meshes) {
+  if (!hl.has(id)) hl.set(id, []);
+  meshes.forEach(m => m.traverse ? m.traverse(o => { if (o.isMesh) hl.get(id).push(o); }) : hl.get(id).push(m));
+}
+
+/* ---------- ground ---------- */
+const shadowCatcher = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: .16 }));
+shadowCatcher.rotation.x = -Math.PI / 2; shadowCatcher.position.y = -.01; shadowCatcher.receiveShadow = true; scene.add(shadowCatcher);
+
+/* ---------- container structure (always visible) ---------- */
+const bar = .11;
+box(L, .12, D, WHITE, 0, .06, 0);                                                      // base frame
+box(L - .2, .02, D - .2, FLOOR, 0, .13, 0);                                            // floor
+[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
+  box(bar + .03, HT, bar + .03, WHITE, sx * (L / 2 - bar / 2), HT / 2, sz * (D / 2 - bar / 2));   // corner posts
+  [0.09, HT - .09].forEach(y => box(.2, .18, .2, WHITE, sx * (L / 2 - .1), y, sz * (D / 2 - .1))); // corner castings
+});
+box(L, .14, bar, WHITE, 0, HT - .07, -D / 2 + bar / 2);                                // rear top rail
+const frontRail = box(L, .14, bar, WHITE, 0, HT - .07, D / 2 - bar / 2);               // front top rail
+const fireStrip = box(L - .3, .05, bar + .02, REDM, 0, HT - .17, D / 2 - bar / 2);     // red fire-rated line, as in the drawing
+tag('fire', fireStrip);
+[-1, 1].forEach(s => box(bar, .14, D, WHITE, s * (L / 2 - bar / 2), HT - .07, 0));     // end top rails
+const rear = corrugated(L - .1, HT - .25, WALL);  rear.position.set(0, .13, -D / 2 + .05); rear.rotation.y = Math.PI;
+const endL = corrugated(D - .1, HT - .25, WALL);  endL.position.set(-L / 2 + .05, .13, 0); endL.rotation.y = -Math.PI / 2;
+const endR = corrugated(D - .1, HT - .25, WALL);  endR.position.set(L / 2 - .05, .13, 0);  endR.rotation.y = Math.PI / 2;
+const DIV = .36;
+const divider = box(.08, HT - .25, D - .14, WHITE, DIV, .13 + (HT - .25) / 2, 0);      // compartment wall
+tag('fire', divider);
+
+/* ---------- batteries + high-voltage control boxes ---------- */
+const modTex = canvasTex(320, 120, (x, w, h) => {
+  x.fillStyle = '#f7f8f9'; x.fillRect(0, 0, w, h);
+  x.fillStyle = '#e8772a'; x.fillRect(22, 18, 34, 34);
+  x.fillStyle = '#26282c'; x.fillRect(100, 18, 34, 34);
+  x.fillStyle = '#9ea2a8'; for (let r = 0; r < 4; r++) for (let c = 0; c < 22; c++) x.fillRect(22 + c * 9, 68 + r * 10, 5, 5);
+  x.strokeStyle = '#c9ccd0'; x.lineWidth = 3; x.strokeRect(1.5, 1.5, w - 3, h - 3);
+  x.fillStyle = '#b9bcc1'; x.fillRect(250, 34, 44, 7); x.fillRect(250, 78, 44, 7);
+});
+const hvTex = canvasTex(320, 120, (x, w, h) => {
+  x.fillStyle = '#f7f8f9'; x.fillRect(0, 0, w, h);
+  x.fillStyle = '#e8772a'; x.fillRect(16, 14, 28, 28); x.fillRect(16, 66, 28, 28);
+  x.fillStyle = '#26282c'; x.fillRect(58, 14, 28, 28); x.fillRect(58, 66, 28, 28);
+  x.fillStyle = '#14161a'; x.fillRect(108, 28, 110, 60);
+  x.fillStyle = '#2f3b4a'; x.fillRect(114, 34, 98, 48);
+  x.fillStyle = '#3e9b4f'; [22, 44, 66, 88].forEach((y, i) => x.fillRect(244 + i * 4, y, 54 - i * 8, 11));
+  x.strokeStyle = '#c9ccd0'; x.lineWidth = 3; x.strokeRect(1.5, 1.5, w - 3, h - 3);
+});
+const RACK_X = [-2.5, -1.82, -1.14, -.46], MOD_W = .62, MOD_H = .225, RACK_Z = -.42, MOD_D = 1.05;
+const batteries = new THREE.Group(), hvBoxes = new THREE.Group(); scene.add(batteries, hvBoxes);
+RACK_X.forEach((rx, i) => {
+  box(MOD_W + .04, 8 * MOD_H + .14, MOD_D - .05, GREY, rx, .15 + (8 * MOD_H + .14) / 2, RACK_Z - .03);   // rack
+  for (let r = 0; r < 8; r++) {
+    const hv = r === 0 && (i === 1 || i === 3);
+    faced(MOD_W, MOD_H - .012, MOD_D, hv ? hvTex : modTex, rx, .22 + MOD_H * r + MOD_H / 2, RACK_Z, hv ? hvBoxes : batteries);
+  }
+});
+tag('battery', batteries); tag('hv', hvBoxes);
+
+/* ---------- battery combiner box (sits in the left bay beside the wall) ---------- */
+const combTex = canvasTex(360, 960, (x, w, h) => {
+  x.fillStyle = '#f7f8f9'; x.fillRect(0, 0, w, h);
+  x.fillStyle = '#c8202f'; x.fillRect(0, 0, w, 54);
+  x.fillStyle = '#2f7d3e'; [120, 240].forEach(px => { x.beginPath(); x.arc(px, 110, 11, 0, 7); x.fill(); });
+  x.fillStyle = '#14161a'; x.fillRect(90, 160, 180, 92); x.fillStyle = '#334356'; x.fillRect(100, 170, 160, 72);
+  x.fillStyle = '#e0c21f'; x.beginPath(); x.arc(180, 298, 22, 0, 7); x.fill(); x.fillStyle = '#c8202f'; x.beginPath(); x.arc(180, 298, 12, 0, 7); x.fill();
+  x.fillStyle = '#26282c'; x.fillRect(28, 370, 22, 90);
+  x.strokeStyle = '#d4d7db'; x.lineWidth = 2; x.strokeRect(100, 640, 160, 130);
+  x.fillStyle = '#b4b8bd'; for (let r = 0; r < 6; r++) x.fillRect(138, 800 + r * 13, 84, 6);
+  x.strokeStyle = '#c9ccd0'; x.lineWidth = 3; x.strokeRect(1.5, 1.5, w - 3, h - 3);
+});
+const combiner = faced(.0001, .0001, .0001, combTex, 0, 0, 0);   // placeholder replaced below
+scene.remove(combiner);
+
+/* ---------- air flue (ducts over the batteries) ---------- */
+const flue = new THREE.Group(); scene.add(flue);
+[[-.75, .0], [.0, 0]].forEach(([z]) => {
+  box(2.7, .09, .52, WHITE, -1.48, 2.27, z, flue);                        // duct top
+  for (let i = 0; i < 6; i++) box(.4, .13, .46, mat(0xb6babf), -2.62 + i * .455, 2.15, z, flue);   // diffuser slots
+});
+tag('flue', flue);
+
+/* ---------- air conditioner on the left end wall ---------- */
+const acTex = canvasTex(256, 256, (x, w, h) => {
+  x.fillStyle = '#d7dadd'; x.fillRect(0, 0, w, h);
+  x.fillStyle = '#a4a8ad'; for (let r = 0; r < 18; r++) x.fillRect(20, 24 + r * 12, w - 40, 6);
+});
+const acUnit = new THREE.Group(); scene.add(acUnit);
+const acFace = new THREE.MeshStandardMaterial({ map: acTex, roughness: .6 });
+const acm = new THREE.Mesh(new THREE.BoxGeometry(.3, 1.1, .92), [GREY, acFace, GREY, GREY, GREY, GREY]);
+acm.position.set(-L / 2 - .15, 1.45, .1); acm.castShadow = true; acUnit.add(acm);
+tag('ac', acUnit);
+
+/* ---------- combiner, placed against the divider ---------- */
+const comb = new THREE.Group(); scene.add(comb);
+faced(.72, 1.9, .62, combTex, -.02 + .0, .14 + .95, -.28 + .0, comb);
+tag('combiner', comb);
+
+/* ---------- hybrid inverter cabinets ---------- */
+const meshTex = canvasTex(360, 960, (x, w, h) => {
+  x.fillStyle = '#f5f6f7'; x.fillRect(0, 0, w, h);
+  x.fillStyle = '#e4e6e8'; x.fillRect(0, 0, w, 280);
+  x.fillStyle = '#26282c'; x.fillRect(0, 0, w, 24);
+  x.strokeStyle = '#d0d3d7'; x.lineWidth = 3; x.strokeRect(1.5, 1.5, w - 3, h - 3);
+  x.fillStyle = '#9da1a6'; for (let r = 0; r < 28; r++) for (let c = 0; c < 26; c++) x.fillRect(60 + c * 9.5, 310 + r * 21, 5, 11);
+  x.fillStyle = '#26282c'; x.fillRect(22, 520, 16, 90);
+});
+const pcsTex = canvasTex(640, 960, (x, w, h) => {
+  x.fillStyle = '#f5f6f7'; x.fillRect(0, 0, w, h);
+  x.fillStyle = '#26282c'; x.fillRect(0, 0, w, 24);
+  x.fillStyle = '#e07a26'; x.fillRect(0, 240, w, 18);
+  x.fillStyle = '#2b2d32'; x.fillRect(0, 258, w, 120);
+  x.fillStyle = '#14161a'; x.fillRect(250, 280, 140, 76); x.fillStyle = '#334356'; x.fillRect(258, 288, 124, 60);
+  x.fillStyle = '#1f3f7a'; x.font = '700 40px sans-serif'; x.fillText('/\\/\\', 500, 200);
+  x.fillStyle = '#9da1a6'; [60, 360].forEach(ox => { for (let r = 0; r < 12; r++) for (let c = 0; c < 22; c++) x.fillRect(ox + c * 10, 480 + r * 20, 5, 10); });
+  x.strokeStyle = '#c9ccd0'; x.lineWidth = 3; x.strokeRect(1.5, 1.5, w - 3, h - 3); x.beginPath(); x.moveTo(w / 2, 258); x.lineTo(w / 2, h); x.stroke();
+});
+const inverter = new THREE.Group(); scene.add(inverter);
+faced(.66, 2.0, .7, meshTex, .86, .14 + 1, -.72, inverter);
+faced(.66, 2.0, .7, meshTex, 1.54, .14 + 1, -.72, inverter);
+faced(1.16, 2.0, .7, pcsTex, 2.47 - .02, .14 + 1, -.72, inverter);
+tag('inverter', inverter);
+
+/* ---------- AC cabinet + red fire cabinet ---------- */
+const acCab = new THREE.Group(); scene.add(acCab);
+box(.72, 1.5, .62, mat(0xf7f8f9, { roughness: .4 }), 1.52, .14 + .75, .2, acCab);
+box(.74, .03, .64, mat(0xe3e5e8), 1.52, .14 + 1.5, .2, acCab);
+tag('accab', acCab);
+const fireCab = new THREE.Group(); scene.add(fireCab);
+box(.62, 1.65, .7, REDM, 2.2, .14 + .825, .1, fireCab);
+box(.05, 1.0, .6, REDM, L / 2 - .15, 1.7, .55, fireCab);
+tag('fire', fireCab);
+
+/* ---------- edge lines so white cabinets read against white ---------- */
+const edgeMat = new THREE.LineBasicMaterial({ color: 0x9a9fa6, transparent: true, opacity: .75 });
+[comb, inverter, acCab].forEach(g => g.children.slice().forEach(m => { if (m.isMesh) { const l = new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), edgeMat); l.position.copy(m.position); g.add(l); } }));
+
+/* ---------- outer shell: opens to reveal the interior ---------- */
+const shell = new THREE.Group(); scene.add(shell);
+const shellMat = mat(0xf2f3f5, { transparent: true });
+const front = corrugated(L - .12, HT - .25, shellMat, shell); front.position.set(0, .13, D / 2 - .03); front.rotation.y = Math.PI;
+const roof = box(L - .04, .05, D - .04, shellMat, 0, HT - .01, 0, shell);
+const logoTex = canvasTex(1024, 256, (x, w, h) => {
+  x.clearRect(0, 0, w, h);
+  x.fillStyle = RED; x.font = '700 150px Newsreader, "Times New Roman", serif'; x.textBaseline = 'alphabetic';
+  x.fillText('YCDT', 40, 165);
+  const m = x.measureText('YCDT').width;
+  x.fillStyle = ORANGE; x.font = 'italic 500 84px Newsreader, serif'; x.fillText('solar', 58 + m, 165);
+  x.fillStyle = RED; x.fillRect(40, 188, 340, 7); x.fillStyle = '#1f2a55'; x.fillRect(380, 188, 240, 7);
+});
+const logoPlane = new THREE.Mesh(new THREE.PlaneGeometry(2.3, .575), new THREE.MeshBasicMaterial({ map: logoTex, transparent: true, toneMapped: false, depthWrite: false }));
+logoPlane.position.set(-1.1, 1.5, D / 2 + .02); shell.add(logoPlane);
+
+/* ---------- labels, as on the drawing ---------- */
+const PARTS = [
+  { id: 'battery',  name: 'Battery',                  note: 'LFP battery modules hold the stored energy.',                 at: [-2.14, 1.0, RACK_Z + MOD_D / 2], side: 'bottom', cam: [[-2.7, 2.0, 6.6], [-1.5, 1.05, 0]] },
+  { id: 'hv',       name: 'High Voltage Control Box', note: 'Controls and protects the DC bus of each battery rack.',      at: [-.46, .33, RACK_Z + MOD_D / 2],  side: 'bottom', cam: [[-.5, 1.5, 5.0], [-.9, .75, 0]] },
+  { id: 'combiner', name: 'Battery Combiner Box',     note: 'Brings every battery rack together onto one DC connection.',  at: [-.02, 1.75, .03],                side: 'top',    cam: [[.9, 2.0, 5.6], [-.1, 1.2, 0]] },
+  { id: 'flue',     name: 'Air Flue',                 note: 'Ducts conditioned air evenly across the battery racks.',      at: [-1.5, 2.32, 0],                  side: 'top',    cam: [[-1.5, 5.6, 5.4], [-1.5, 1.7, -.3]] },
+  { id: 'ac',       name: 'Air Conditioner',          note: 'Holds the batteries in their ideal temperature range.',       at: [-L / 2 - .15, 1.8, .4],          side: 'top',    cam: [[-6.6, 2.9, 4.6], [-2.5, 1.35, 0]] },
+  { id: 'inverter', name: 'Hybrid Inverter',          note: 'Converts power between solar, battery, grid and your loads.', at: [1.54, 2.0, -.37],                side: 'top',    cam: [[2.2, 3.0, 6.2], [1.7, 1.2, -.4]] },
+  { id: 'accab',    name: 'AC Cabinet',               note: 'Distributes and protects the AC output to your site.',        at: [1.52, 1.1, .51],                 side: 'bottom', cam: [[2.6, 2.1, 5.6], [1.65, .95, 0]] },
+  { id: 'fire',     name: 'Fire Resistance',          note: 'Fire-rated partition and protection around the equipment.',   at: [2.55, HT - .17, D / 2],          side: 'top',    cam: [[3.9, 3.8, 6.8], [1.7, 1.45, 0]] },
+];
+
+/* ---------- timeline ---------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ss = (a, b, t) => { const x = clamp((t - a) / (b - a)); return x * x * (3 - 2 * x); };
+const OVERVIEW = { pos: new THREE.Vector3(.0, 6.1, 10.0), look: new THREE.Vector3(0, .98, 0) };
+const T_OPEN = 3.4, T_TOUR = 6.2, STEP = 1.95, T_END = T_TOUR + STEP * PARTS.length;   // tour ends 21.8 s
+const glow = new THREE.Color(0xc8202f);
+const hlAll = [...hl.values()].flat();
+hlAll.forEach(m => { const ms = Array.isArray(m.material) ? m.material : [m.material]; m.userData.base = ms.map(x => x.clone()); m.material = Array.isArray(m.material) ? ms.map(x => x.clone()) : ms[0].clone(); });
+
+function setHighlights(amounts) {
+  for (const [id, meshes] of hl) {
+    const a = amounts[id] || 0;
+    for (const m of meshes) (Array.isArray(m.material) ? m.material : [m.material]).forEach(x => { x.emissive = glow; x.emissiveIntensity = a * .16; });
+  }
+}
+const v = new THREE.Vector3();
+const pos = new THREE.Vector3(), look = new THREE.Vector3(), a = new THREE.Vector3(), b = new THREE.Vector3();
+
+function cameraAt(t) {
+  if (t < T_OPEN) {                         // slow orbit outside
+    const k = t / T_OPEN, ang = -.62 + k * .34;
+    pos.set(Math.sin(ang) * 11.2, 3.0 + k * .4, Math.cos(ang) * 11.2); look.set(0, 1.25, 0); return;
+  }
+  const seq = [{ p: OVERVIEW.pos, l: OVERVIEW.look, t: T_TOUR - .35 }];
+  PARTS.forEach((P, i) => seq.push({ p: new THREE.Vector3(...P.cam[0]), l: new THREE.Vector3(...P.cam[1]), t: T_TOUR + i * STEP + .55 }));
+  seq.push({ p: OVERVIEW.pos, l: OVERVIEW.look, t: T_END + .9 });
+  const ang0 = -.28;                       // starting point of the move in
+  const start = { p: new THREE.Vector3(Math.sin(ang0) * 11.2, 3.4, Math.cos(ang0) * 11.2), l: new THREE.Vector3(0, 1.25, 0), t: T_OPEN };
+  const all = [start, ...seq];
+  for (let i = 0; i < all.length - 1; i++) {
+    if (t <= all[i + 1].t) {
+      const k = ss(all[i].t, all[i + 1].t, t);
+      pos.lerpVectors(all[i].p, all[i + 1].p, k); look.lerpVectors(all[i].l, all[i + 1].l, k); return;
+    }
+  }
+  pos.copy(OVERVIEW.pos); look.copy(OVERVIEW.look);
+  const k = ss(T_END + .9, DUR, t);        // gentle drift while the final card holds
+  pos.x += k * .35;
+}
+
+function project(p) { v.set(p[0], p[1], p[2]).project(camera); return [(v.x * .5 + .5) * W, (.5 - v.y * .5) * H]; }
+
+function text(s, x, y, font, color, align = 'left') { ctx.font = font; ctx.fillStyle = color; ctx.textAlign = align; ctx.fillText(s, x, y); }
+function logo(x, y, s, alpha = 1) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  ctx.font = `700 ${s}px Newsreader, "Times New Roman", serif`; ctx.fillStyle = RED; ctx.fillText('YCDT', x, y);
+  const m = ctx.measureText('YCDT').width;
+  ctx.font = `italic 500 ${s * .55}px Newsreader, serif`; ctx.fillStyle = ORANGE; ctx.fillText('solar', x + m + s * .1, y);
+  const m2 = ctx.measureText('solar').width, total = m + s * .1 + m2;
+  ctx.fillStyle = RED; ctx.fillRect(x, y + s * .14, total * .58, Math.max(2, s * .035));
+  ctx.fillStyle = '#1f2a55'; ctx.fillRect(x + total * .58, y + s * .14, total * .42, Math.max(2, s * .035));
+  ctx.restore();
+}
+
+function callout(P, alpha, strong) {
+  if (alpha <= .01) return;
+  const [ax, ay] = project(P.at);
+  ctx.save(); ctx.globalAlpha = alpha;
+  const top = P.side === 'top', ly = top ? 66 : H - 58;
+  ctx.strokeStyle = RED; ctx.lineWidth = strong ? 2.5 : 1.75;
+  ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(ax, top ? ly + 10 : ly - 22); ctx.stroke();
+  ctx.fillStyle = '#ef4a54'; ctx.beginPath(); ctx.arc(ax, ay, strong ? 8.5 : 6.5, 0, 7); ctx.fill();
+  ctx.font = `${strong ? 600 : 500} ${strong ? 22 : 16}px Geist, sans-serif`;
+  const tw = ctx.measureText(P.name).width, tx = clamp(ax, tw / 2 + 18, W - tw / 2 - 18);
+  ctx.fillStyle = 'rgba(255,255,255,.82)'; ctx.fillRect(tx - tw / 2 - 6, ly - 19, tw + 12, 27);
+  ctx.fillStyle = INK; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillText(P.name, tx, ly);
+  ctx.restore();
+}
+
+/* ---------- final overlap adjustment: label x's on the overview shouldn't collide ---------- */
+function drawFrame(t) {
+  // shell opening
+  const open = ss(T_OPEN, T_OPEN + 2.2, t);
+  shell.visible = open < .995;
+  roof.position.y = HT - .01 + open * 2.2;
+  front.position.z = D / 2 - .03 + open * 2.4;
+  front.position.y = .13 - open * 0;
+  logoPlane.position.z = D / 2 + .02 + open * 2.4;
+  shellMat.opacity = 1 - ss(.35, 1, open);
+  logoPlane.material.opacity = 1 - ss(.2, .75, open);
+  frontRail.visible = true;
+
+  cameraAt(t);
+  camera.position.copy(pos); camera.lookAt(look); camera.updateMatrixWorld();
+
+  // highlights
+  const amts = {}; let cur = -1;
+  PARTS.forEach((P, i) => {
+    const s = T_TOUR + i * STEP, e = s + STEP;
+    const am = ss(s + .2, s + .55, t) * (1 - ss(e - .05, e + .3, t));
+    amts[P.id] = Math.max(amts[P.id] || 0, am);
+    if (t >= s && t < e) cur = i;
+  });
+  setHighlights(amts);
+  renderer.render(scene, camera);
+  ctx.globalAlpha = 1; ctx.drawImage(renderer.domElement, 0, 0, W, H);
+
+  // intro title
+  const intro = ss(.3, 1.0, t) * (1 - ss(T_OPEN - .5, T_OPEN + .3, t));
+  if (intro > .01) {
+    logo(56, 92, 54, intro);
+    ctx.save(); ctx.globalAlpha = intro; ctx.textBaseline = 'alphabetic';
+    text('500 kW', 56, 646, '600 54px Geist, sans-serif', INK);
+    text('Containerised solar + storage system', 58, 682, '400 21px Geist, sans-serif', MUTED);
+    ctx.restore();
+  }
+  // tour callouts + caption
+  const showAll = ss(T_END + .15, T_END + 1.1, t);
+  PARTS.forEach((P, i) => {
+    const s = T_TOUR + i * STEP, e = s + STEP;
+    const tour = ss(s + .3, s + .65, t) * (1 - ss(e - .1, e + .15, t));
+    callout(P, Math.max(tour, showAll), tour > .5 && !showAll);
+  });
+  if (cur >= 0 && t < T_END) {
+    const s = T_TOUR + cur * STEP, al = ss(s + .3, s + .6, t) * (1 - ss(s + STEP - .25, s + STEP, t)), P = PARTS[cur];
+    ctx.save(); ctx.globalAlpha = al;
+    const top = P.side === 'top', y = top ? 628 : 92;
+    ctx.fillStyle = 'rgba(255,255,255,.88)'; ctx.fillRect(40, y - 34, 560, 62);
+    ctx.fillStyle = RED; ctx.fillRect(40, y - 34, 4, 62);
+    ctx.textBaseline = 'alphabetic';
+    text(`${cur + 1} / ${PARTS.length}`, 60, y - 11, '500 13px Geist, sans-serif', MUTED);
+    text(P.note, 60, y + 14, '500 18px Geist, sans-serif', INK);
+    ctx.restore();
+  }
+  // final card
+  if (showAll > .01) {
+    ctx.save(); logo(40, 688, 30, showAll);
+    ctx.globalAlpha = showAll; ctx.textBaseline = 'alphabetic';
+    text('500 kW', W - 40, 672, '600 30px Geist, sans-serif', INK, 'right');
+    text('Containerised system', W - 40, 696, '400 15px Geist, sans-serif', MUTED, 'right');
+    ctx.restore();
+  }
+  // fade through white at the loop point
+  const f = Math.max(1 - ss(0, .35, t), ss(DUR - .5, DUR, t));
+  if (f > 0) { ctx.fillStyle = `rgba(255,255,255,${f})`; ctx.fillRect(0, 0, W, H); }
+}
+
+await document.fonts.load('700 40px Newsreader'); await document.fonts.load('italic 500 40px Newsreader');
+await document.fonts.load('500 20px Geist'); await document.fonts.load('600 20px Geist');
+// logo texture was drawn before fonts arrived: redraw
+const lc = logoTex.image, lx = lc.getContext('2d'); lx.clearRect(0, 0, lc.width, lc.height);
+lx.fillStyle = RED; lx.font = '700 150px Newsreader, serif'; lx.fillText('YCDT', 40, 165);
+const lm = lx.measureText('YCDT').width; lx.fillStyle = ORANGE; lx.font = 'italic 500 84px Newsreader, serif'; lx.fillText('solar', 58 + lm, 165);
+const lm2 = lx.measureText('solar').width, lt = lm + 18 + lm2;
+lx.fillStyle = RED; lx.fillRect(40, 188, lt * .58, 7); lx.fillStyle = '#1f2a55'; lx.fillRect(40 + lt * .58, 188, lt * .42, 7);
+logoTex.needsUpdate = true;
+
+window.drawAt = drawFrame;
+const q = new URLSearchParams(location.search);
+drawFrame(+(q.get('t') ?? 2));
+window.__ready = true;
+
+window.renderVideo = async (bitrate = 1_900_000) => {
+  const { Muxer, ArrayBufferTarget } = await import('mp4-muxer');
+  const muxer = new Muxer({ target: new ArrayBufferTarget(), video: { codec: 'avc', width: W, height: H }, fastStart: 'in-memory' });
+  let err = null;
+  const enc = new VideoEncoder({ output: (c, m) => muxer.addVideoChunk(c, m), error: e => { err = e; } });
+  enc.configure({ codec: 'avc1.640028', width: W, height: H, bitrate, framerate: FPS, latencyMode: 'quality' });
+  const N = Math.round(DUR * FPS);
+  for (let i = 0; i < N; i++) {
+    drawFrame(i / FPS);
+    const f = new VideoFrame(out, { timestamp: Math.round(i * 1e6 / FPS), duration: Math.round(1e6 / FPS) });
+    enc.encode(f, { keyFrame: i % 60 === 0 }); f.close();
+    while (enc.encodeQueueSize > 8) await new Promise(r => setTimeout(r, 5));
+    if (err) throw err;
+    window.__progress = i / N;
+    if (i % 15 === 0) await new Promise(r => setTimeout(r, 0));
+  }
+  await enc.flush(); muxer.finalize();
+  return new Blob([muxer.target.buffer], { type: 'video/mp4' });
+};
+</script>
+</body>
+</html>

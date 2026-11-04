@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin — YCDT Solar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&display=swap">
+<style>
+:root{--red:#c8202f;--red-2:#a81825;--ink:#17171a;--muted:#5a5a61;--line:rgba(0,0,0,.12);--bg:#f4f4f5}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:14px/1.5 Geist,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.mark{font:700 22px/1 Newsreader,serif;color:var(--red);white-space:nowrap}
+.mark i{font-weight:500;font-size:.72em;color:#c5662f;margin-left:.12em}
+.btn{height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:#fff;font-weight:500;white-space:nowrap}
+.btn:hover{border-color:rgba(0,0,0,.28)}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn.primary:hover{background:var(--red-2)}
+.btn[disabled]{opacity:.5;pointer-events:none}
+.input{width:100%;height:42px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.input:focus{outline:2px solid var(--red);outline-offset:-1px}
+textarea.input{height:auto;padding:10px 12px;resize:vertical}
+label.f{display:block;margin-top:14px}
+label.f>span{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+label.f small{display:block;color:var(--muted);margin-top:4px;font-size:12px}
+/* login */
+#login{min-height:100%;display:grid;place-items:center;padding:20px}
+.login-card{width:min(400px,100%);background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px}
+.login-card h1{font:500 20px Geist,sans-serif;margin-top:18px}
+.login-card p{color:var(--muted);margin-top:4px}
+.login-card .btn{width:100%;height:44px;margin-top:18px}
+.msg{margin-top:12px;font-size:13px;color:var(--red)}
+/* editor */
+#editor{height:100%;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.bar select{height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:#fff;font-weight:500}
+.status{margin-left:auto;font-size:13px;color:var(--muted);text-align:right}
+.status.dirty{color:#8a5a00}.status.ok{color:#14663a}.status.bad{color:var(--red)}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{height:34px;padding:0 10px;border:0;background:#fff;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.hint{padding:7px 14px;background:#fff8ee;border-bottom:1px solid #f0dfc4;font-size:13px;color:#6d4a10}
+.stagewrap{flex:1;min-height:0;display:flex;justify-content:center;background:#e9e9eb;overflow:auto}
+iframe{border:0;background:#fff;width:100%;height:100%;transition:width .2s}
+iframe.phone{width:390px;box-shadow:0 0 0 1px var(--line)}
+/* dialog */
+dialog{margin:auto;border:0;border-radius:16px;padding:26px;width:min(520px,94vw);box-shadow:0 24px 80px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+dialog h2{font:500 18px Geist,sans-serif}
+dialog p.d{color:var(--muted);font-size:13px;margin-top:2px}
+.dlg-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:22px}
+@media (max-width:760px){.status{width:100%;margin:0;text-align:left;order:9}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+
+<section id="login" hidden>
+  <form class="login-card" id="login-form">
+    <div class="mark">YCDT<i>solar</i></div>
+    <h1>Website admin</h1>
+    <p>Sign in to edit the website.</p>
+    <label class="f"><span>Password</span><input class="input" type="password" id="pw" autocomplete="current-password" required autofocus></label>
+    <button class="btn primary" type="submit">Sign in</button>
+    <div class="msg" id="login-msg" role="alert"></div>
+  </form>
+</section>
+
+<section id="editor" hidden>
+  <div class="bar">
+    <div class="mark">YCDT<i>solar</i></div>
+    <select id="page" aria-label="Page to edit">
+      <option value="index.html">Home</option>
+      <option value="solutions.html">Solutions</option>
+      <option value="projects.html">Projects</option>
+      <option value="about.html">About us</option>
+      <option value="contact.html">Contact</option>
+    </select>
+    <button class="btn" id="seo">Page title &amp; SEO</button>
+    <button class="btn" id="settings">Contact settings</button>
+    <div class="seg hide-sm" role="group" aria-label="Preview size">
+      <button id="v-desk" aria-pressed="true">Desktop</button>
+      <button id="v-phone" aria-pressed="false">Phone</button>
+    </div>
+    <span class="status" id="status" role="status">Loading…</span>
+    <button class="btn" id="discard" disabled>Discard</button>
+    <button class="btn primary" id="save" disabled>Save &amp; publish</button>
+    <button class="btn" id="logout">Sign out</button>
+  </div>
+  <div class="hint">Click any text to edit it. Hover a photo or item for options: replace, duplicate, delete, move. Changes go live about a minute after publishing.</div>
+  <div class="stagewrap"><iframe id="frame" title="Page being edited"></iframe></div>
+</section>
+
+<dialog id="dlg-seo">
+  <form method="dialog">
+    <h2>Page title &amp; SEO</h2>
+    <p class="d">What this page shows in browser tabs and Google results.</p>
+    <label class="f"><span>Title</span><input class="input" id="seo-title" maxlength="90"></label>
+    <label class="f"><span>Description</span><textarea class="input" id="seo-desc" rows="3" maxlength="220"></textarea></label>
+    <div class="dlg-foot"><button class="btn" value="cancel">Cancel</button><button class="btn primary" value="ok">Apply</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlg-settings">
+  <form method="dialog">
+    <h2>Contact settings</h2>
+    <p class="d">Shown in the footer and on the Contact page, and used by the enquiry form.</p>
+    <label class="f"><span>Email</span><input class="input" id="s-email" type="email" placeholder="info@example.com"></label>
+    <label class="f"><span>Phone</span><input class="input" id="s-phone" placeholder="+234 800 000 0000"></label>
+    <label class="f"><span>WhatsApp number</span><input class="input" id="s-whatsapp" placeholder="2348000000000"><small>Digits only, with country code.</small></label>
+    <label class="f"><span>Enquiry form endpoint</span><input class="input" id="s-endpoint" placeholder="https://formspree.io/f/xxxxxxx"><small>Enquiries are sent here (e.g. a Formspree form). If empty, the form opens the visitor's email or WhatsApp instead.</small></label>
+    <div class="dlg-foot"><button class="btn" value="cancel">Cancel</button><button class="btn primary" value="ok">Save &amp; publish</button></div>
+  </form>
+</dialog>
+
+<input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>YCDT Solar — Solar + storage, engineered for weak grids</title>
 <meta name="description" content="YCDT Solar designs and supplies liquid-cooled battery storage, hybrid solar and microgrid systems for homes, hotels, farms, factories and institutions — installed and serviced in Nigeria with Green Solar System.">
-<meta name="theme-color" content="#151517">
+<meta name="theme-color" content="#ffffff">
 <meta property="og:title" content="YCDT Solar — Solar + storage, engineered for weak grids">
 <meta property="og:description" content="Battery storage, hybrid solar and microgrid systems. Manufactured in Hangzhou, installed and serviced in Lagos.">
 <meta property="og:image" content="assets/img/rooftop-array-02.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23151517'/%3E%3Ccircle cx='17.5' cy='6.5' r='2.6' fill='%23e5484d'/%3E%3Cpath d='M3.5 19 7 10h10l-3.5 9z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23ffffff'/%3E%3Ccircle cx='17.5' cy='6.5' r='2.6' fill='%23c8202f'/%3E%3Cpath d='M3.5 19 7 10h10l-3.5 9z' fill='%2317171a'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&display=swap">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
 <header class="site-header">
   <div class="brand">
     <a class="brand-mark" href="index.html" aria-label="YCDT Solar home">
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.8" fill="#e5484d"/><path d="M2.5 20 6.5 9.5h11L13.5 20z" fill="#fff"/><path d="M4.5 14.75h11M10.2 9.5 8 20M14.1 9.5 11.9 20" stroke="#151517" stroke-width="1.1"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.8" fill="#c8202f"/><path d="M2.5 20 6.5 9.5h11L13.5 20z" fill="#17171a"/><path d="M4.5 14.75h11M10.2 9.5 8 20M14.1 9.5 11.9 20" stroke="#fff" stroke-width="1.1"/></svg>
       <span class="brand-name">YCDT<i>solar</i></span>
     </a>
     <nav class="links" aria-label="Primary">
@@ -296,7 +296,7 @@
   <div class="foot">
     <div class="foot-brand">
       <a class="brand-mark" href="index.html" aria-label="YCDT Solar home">
-        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.8" fill="#e5484d"/><path d="M2.5 20 6.5 9.5h11L13.5 20z" fill="#fff"/><path d="M4.5 14.75h11M10.2 9.5 8 20M14.1 9.5 11.9 20" stroke="#151517" stroke-width="1.1"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.8" fill="#c8202f"/><path d="M2.5 20 6.5 9.5h11L13.5 20z" fill="#17171a"/><path d="M4.5 14.75h11M10.2 9.5 8 20M14.1 9.5 11.9 20" stroke="#fff" stroke-width="1.1"/></svg>
         <span class="brand-name">YCDT<i>solar</i></span>
       </a>
       <p>Battery storage, hybrid solar and microgrid systems, engineered for weak grids. Installed and serviced in Nigeria by Green Solar System.</p>
@@ -314,6 +314,7 @@
   <div class="foot-base"><span>© <span data-year>2026</span> YCDT Solar · Green Solar System</span><span>Solar + storage, engineered for weak grids.</span></div>
 </footer>
 
+<script src="assets/js/settings.js"></script>
 <script src="assets/js/site.js"></script>
 <script type="importmap">
 { "imports": {
@@ -459,7 +460,7 @@ const tilt = new THREE.Group(); tilt.rotation.x = -0.98; root.add(tilt);
 const BASE_YAW = -0.42;
 root.rotation.y = BASE_YAW;
 
-const outlineMat = () => new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false });
+const outlineMat = () => new THREE.LineBasicMaterial({ color: 0x70757d, transparent: true, opacity: 0, depthWrite: false });
 function rectOutline(w, h, z){
   const g = new THREE.BufferGeometry().setFromPoints([
     new THREE.Vector3(-w / 2, -h / 2, z), new THREE.Vector3(w / 2, -h / 2, z), new THREE.Vector3(w / 2, h / 2, z), new THREE.Vector3(-w / 2, h / 2, z)
@@ -484,28 +485,28 @@ const stackVec = L => new THREE.Vector3(L * 0.05, L * 0.115, L * 0.165);
 
 // 01 frame
 const fw = 0.026, fd = 0.036, ow = PW + 0.024, oh = PH + 0.024;
-const frameMat = new THREE.MeshStandardMaterial({ color: 0xc8ced6, metalness: 1, roughness: .28 });
+const frameMat = new THREE.MeshStandardMaterial({ color: 0xb4bbc4, metalness: 1, roughness: .3 });
 const frameGroup = new THREE.Group();
 [[ow, fw, 0, oh / 2 - fw / 2], [ow, fw, 0, -oh / 2 + fw / 2], [fw, oh - 2 * fw, -ow / 2 + fw / 2, 0], [fw, oh - 2 * fw, ow / 2 - fw / 2, 0]]
   .forEach(([w, h, px, py]) => { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, fd), frameMat); b.position.set(px, py, -0.004); frameGroup.add(b); });
 addLayer(COMPONENTS[0], frameGroup, 0, stackVec(3), new THREE.Vector3(ow / 2, -oh / 2, 0.014), rectOutline(ow + .02, oh + .02, 0.014));
 
 // 02 glass — additive so only its reflections show, plus a faint tint and edges
-const glassMat = new THREE.MeshPhysicalMaterial({ color: 0x000000, roughness: .05, metalness: 0, clearcoat: 1, clearcoatRoughness: .03,
-  envMapIntensity: 1.0, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+const glassMat = new THREE.MeshPhysicalMaterial({ color: 0xcfe3f2, roughness: .06, metalness: 0, clearcoat: 1, clearcoatRoughness: .03,
+  envMapIntensity: 1.3, transparent: true, opacity: .14, depthWrite: false });
 const glass = new THREE.Group();
 const glassBox = new THREE.BoxGeometry(PW, PH, .005);
 glass.add(new THREE.Mesh(glassBox, glassMat));
-const glassTint = new THREE.Mesh(new THREE.PlaneGeometry(PW, PH), new THREE.MeshBasicMaterial({ color: 0x9cc3ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+const glassTint = new THREE.Mesh(new THREE.PlaneGeometry(PW, PH), new THREE.MeshBasicMaterial({ color: 0x7fb2d9, transparent: true, opacity: 0, depthWrite: false }));
 glassTint.position.z = .0026; glass.add(glassTint);
-const glassEdges = new THREE.LineSegments(new THREE.EdgesGeometry(glassBox), new THREE.LineBasicMaterial({ color: 0xcfe2ff, transparent: true, opacity: .15, depthWrite: false }));
+const glassEdges = new THREE.LineSegments(new THREE.EdgesGeometry(glassBox), new THREE.LineBasicMaterial({ color: 0x4f7695, transparent: true, opacity: .15, depthWrite: false }));
 glass.add(glassEdges);
 addLayer(COMPONENTS[1], glass, 0.009, stackVec(2), new THREE.Vector3(PW / 2, -PH / 2, .0025), rectOutline(PW + .02, PH + .02, .0025));
 
 // 03 / 03b EVA
 function evaSheet(){
   const g = new THREE.Group();
-  const m = new THREE.Mesh(new THREE.BoxGeometry(PW, PH, .0016), new THREE.MeshStandardMaterial({ color: 0xeef3fb, roughness: .55, transparent: true, opacity: .04, depthWrite: false }));
+  const m = new THREE.Mesh(new THREE.BoxGeometry(PW, PH, .0016), new THREE.MeshStandardMaterial({ color: 0xcdd9e3, roughness: .55, transparent: true, opacity: .04, depthWrite: false }));
   g.add(m);
   g.userData.mat = m.material;
   return g;
@@ -521,7 +522,7 @@ const cells = new THREE.Mesh(new THREE.PlaneGeometry(PW - .004, PH - .004), cell
 addLayer(COMPONENTS[3], cells, 0.0035, stackVec(0), new THREE.Vector3(PW / 2, -PH / 2, 0), rectOutline(PW + .02, PH + .02, 0));
 
 // 05 backsheet
-const back = new THREE.Mesh(new THREE.BoxGeometry(PW, PH, .003), new THREE.MeshStandardMaterial({ color: 0xdcdfe4, roughness: .8, envMapIntensity: .55 }));
+const back = new THREE.Mesh(new THREE.BoxGeometry(PW, PH, .003), new THREE.MeshStandardMaterial({ color: 0xf1f2f4, roughness: .8, envMapIntensity: .7 }));
 addLayer(COMPONENTS[5], back, -0.001, stackVec(-2), new THREE.Vector3(PW / 2, -PH / 2, .0015), rectOutline(PW + .02, PH + .02, .0015));
 
 // 06 junction box + MC4 leads (mounted on the back, near the top edge)
@@ -548,6 +549,12 @@ jbOutline.position.copy(jbox.position);
 const jbLayer = addLayer(COMPONENTS[6], jbox, 0, new THREE.Vector3(.25, -0.98, -0.42), new THREE.Vector3(.11, PH * .3 - .065, -.0025), jbOutline);
 jbLayer.group.position.z = 0;
 
+// soft shadow on the white floor
+const shadowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'), g = x.createRadialGradient(128, 128, 10, 128, 128, 128);
+  g.addColorStop(0, 'rgba(30,30,40,.30)'); g.addColorStop(.55, 'rgba(30,30,40,.10)'); g.addColorStop(1, 'rgba(30,30,40,0)'); x.fillStyle = g; x.fillRect(0, 0, 256, 256); return new THREE.CanvasTexture(c); })();
+const shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.7), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, toneMapped: false }));
+shadow.rotation.x = -Math.PI / 2; shadow.position.y = -.98; scene.add(shadow);
+
 // sun motes drifting down the light toward the module
 const MOTES = 170;
 const motePos = new Float32Array(MOTES * 3), moteT = new Float32Array(MOTES), moteOff = [];
@@ -555,8 +562,8 @@ const sideA = new THREE.Vector3().crossVectors(SUN, new THREE.Vector3(0, 1, 0)).
 const sideB = new THREE.Vector3().crossVectors(SUN, sideA).normalize();
 for (let i = 0; i < MOTES; i++) { moteT[i] = Math.random(); moteOff.push([(Math.random() * 2 - 1) * 1.3, (Math.random() * 2 - 1) * .9, .3 + Math.random() * .7]); }
 const moteGeo = new THREE.BufferGeometry(); moteGeo.setAttribute('position', new THREE.BufferAttribute(motePos, 3));
-const motes = new THREE.Points(moteGeo, new THREE.PointsMaterial({ map: dotTexture(), size: .028, color: 0xffe0b0, transparent: true, opacity: .55,
-  blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true }));
+const motes = new THREE.Points(moteGeo, new THREE.PointsMaterial({ map: dotTexture(), size: .022, color: 0xd99a3c, transparent: true, opacity: .45,
+  depthWrite: false, sizeAttenuation: true }));
 scene.add(motes);
 
 /* ------------------------------------------------------------------ */
@@ -661,7 +668,7 @@ function layout(){
 /* ------------------------------------------------------------------ */
 /* Loop                                                               */
 /* ------------------------------------------------------------------ */
-const v3 = new THREE.Vector3(), SUN_COL = new THREE.Color(0xf5b544), WHITE = new THREE.Color(0xffffff);
+const v3 = new THREE.Vector3(), SUN_COL = new THREE.Color(0xc8202f), WHITE = new THREE.Color(0x70757d);
 const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 let running = true, raf = 0, last = performance.now(), t0 = last, tourIdx = ORDER.indexOf('cells');
 
@@ -698,13 +705,13 @@ function frame(now){
     l.lift = l.sel * e;
     l.group.position.set(l.explode.x * e, l.explode.y * e, l.baseZ + l.explode.z * e + l.lift * .06);
     if (l.outline) {
-      l.outline.material.opacity = e * (.1 + .8 * l.sel);
+      l.outline.material.opacity = e * (.28 + .72 * l.sel);
       l.outline.material.color.copy(WHITE).lerp(SUN_COL, l.sel);
     }
   }
-  evaF.userData.mat.opacity = evaR.userData.mat.opacity = .03 + .09 * e + .08 * layers[2].sel * e;
-  glassTint.material.opacity = .015 + .05 * e + .05 * layers[1].sel * e;
-  glassEdges.material.opacity = .12 + .35 * e;
+  evaF.userData.mat.opacity = evaR.userData.mat.opacity = .02 + .3 * e + .12 * layers[2].sel * e;
+  glassTint.material.opacity = .02 + .1 * e + .08 * layers[1].sel * e;
+  glassEdges.material.opacity = .15 + .55 * e;
   const pulse = (.5 + .5 * Math.sin(time * 3)) * layers[3].sel * e;
   cellMat.emissive.setRGB(.02 * pulse, .06 * pulse, .16 * pulse);
 
