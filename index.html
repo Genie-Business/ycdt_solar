@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>YCDT Solar — Solar + storage, engineered for weak grids</title>
+<meta name="description" content="YCDT Solar designs and supplies liquid-cooled battery storage, hybrid solar and microgrid systems for homes, hotels, farms, factories and institutions — installed and serviced in Nigeria with Green Solar System.">
+<meta name="theme-color" content="#151517">
+<meta property="og:title" content="YCDT Solar — Solar + storage, engineered for weak grids">
+<meta property="og:description" content="Battery storage, hybrid solar and microgrid systems. Manufactured in Hangzhou, installed and serviced in Lagos.">
+<meta property="og:image" content="assets/img/rooftop-array-02.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23151517'/%3E%3Ccircle cx='17.5' cy='6.5' r='2.6' fill='%23e5484d'/%3E%3Cpath d='M3.5 19 7 10h10l-3.5 9z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="brand">
+    <a class="brand-mark" href="index.html" aria-label="YCDT Solar home">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.8" fill="#e5484d"/><path d="M2.5 20 6.5 9.5h11L13.5 20z" fill="#fff"/><path d="M4.5 14.75h11M10.2 9.5 8 20M14.1 9.5 11.9 20" stroke="#151517" stroke-width="1.1"/></svg>
+      <span class="brand-name">YCDT<i>solar</i></span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="solutions.html">Solutions</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About us</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="right">
+    <a class="chip-link" href="projects.html">Track record <kbd>10 sites</kbd></a>
+    <a class="ask" href="contact.html#enquiry">Make an enquiry</a>
+    <button class="icon-btn menu" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="drawer-top">
+    <span class="brand-name">YCDT<i>solar</i></span>
+    <button class="icon-btn" id="drawer-close" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <nav aria-label="Mobile">
+    <a href="index.html">Home <small>01</small></a>
+    <a href="solutions.html">Solutions <small>02</small></a>
+    <a href="projects.html">Projects <small>03</small></a>
+    <a href="about.html">About us <small>04</small></a>
+    <a href="contact.html">Contact <small>05</small></a>
+  </nav>
+  <a class="ask" href="contact.html#enquiry">Make an enquiry</a>
+  <div class="drawer-foot">Hangzhou, China · Lagos, Nigeria</div>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-label="YCDT Solar">
+  <div class="stage" aria-hidden="true">
+    <div class="sunlight"></div>
+    <canvas id="gl"></canvas>
+    <svg class="leaders"></svg>
+    <div class="plabels"></div>
+  </div>
+  <div class="view-toggle" role="group" aria-label="Module view">
+    <button type="button" data-view="assembled" aria-pressed="false">Assembled</button>
+    <button type="button" data-view="exploded" aria-pressed="false">Exploded</button>
+  </div>
+  <div class="copy">
+    <h1 class="wordmark rise">YCDT<i>solar</i></h1>
+    <p class="lede rise"><span>Solar + storage,</span><span>engineered for weak grids.</span></p>
+    <div class="rise">
+      <div class="tabs-label" id="anatomy-label">Inside every module</div>
+      <div class="tabs" role="tablist" aria-labelledby="anatomy-label">
+        <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-id="frame" data-cmd="Anodised aluminium frame gives rigidity, mounting points and a grounding path.">Frame</button>
+        <span class="dot" aria-hidden="true">·</span>
+        <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-id="glass" data-cmd="Tempered, anti-reflective glass lets light through and keeps weather out.">Glass</button>
+        <span class="dot" aria-hidden="true">·</span>
+        <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-id="eva" data-cmd="EVA encapsulant bonds the stack together and cushions the cells.">EVA</button>
+        <span class="dot" aria-hidden="true">·</span>
+        <button class="tab" role="tab" aria-selected="true" tabindex="0" data-id="cells" data-cmd="Half-cut monocrystalline cells turn sunlight into DC power.">Cells</button>
+        <span class="dot" aria-hidden="true">·</span>
+        <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-id="backsheet" data-cmd="The backsheet insulates and seals the rear of the module.">Backsheet</button>
+        <span class="dot" aria-hidden="true">·</span>
+        <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-id="jbox" data-cmd="Junction box with bypass diodes and MC4 leads that carry power to the inverter.">Junction box</button>
+      </div>
+    </div>
+    <div class="cmd rise" aria-live="polite">
+      <span class="cmd-text" id="cmd">Half-cut monocrystalline cells turn sunlight into DC power.</span>
+      <a class="copy-btn" href="solutions.html#pv" aria-label="Explore our solar solutions">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="hero-actions rise">
+      <a class="btn btn-primary" href="contact.html#enquiry">Make an enquiry <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost" href="solutions.html">Our solutions</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRACK RECORD ============ -->
+<section class="section" id="record">
+  <div class="head-row">
+    <div>
+      <div class="eyebrow reveal"><b>01</b> Track record</div>
+      <h2 class="title reveal">Running today, across Nigeria.</h2>
+    </div>
+    <a class="text-link reveal" href="projects.html">See all projects <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="stats reveal">
+    <div class="stat"><div class="stat-n" data-count="10">10</div><div class="stat-l">Projects delivered<br>and running</div></div>
+    <div class="stat"><div class="stat-n"><span data-count="2300">2,300</span><small>+</small></div><div class="stat-l">Solar panels<br>installed</div></div>
+    <div class="stat"><div class="stat-n"><span data-count="1.5" data-dec="1">1.5</span><small>MW+</small></div><div class="stat-l">Inverter capacity<br>deployed</div></div>
+    <div class="stat"><div class="stat-n"><span data-count="3">3</span><small>MWh+</small></div><div class="stat-l">Battery storage<br>commissioned</div></div>
+  </div>
+  <div class="trusted reveal" aria-label="Trusted by">
+    <span class="trusted-label">Trusted by</span>
+    <div class="trusted-track"><span>Eltees Farms</span><span>Just Food</span><span>Grant Quatermaine</span><span>Lacour</span><span>ParkView Estate</span><span>StoneHouse</span><span>Banana Island</span><span>Dolphin Estate</span></div>
+    <div class="trusted-track" aria-hidden="true"><span>Eltees Farms</span><span>Just Food</span><span>Grant Quatermaine</span><span>Lacour</span><span>ParkView Estate</span><span>StoneHouse</span><span>Banana Island</span><span>Dolphin Estate</span></div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE DO ============ -->
+<div class="rule"></div>
+<section class="section" id="what">
+  <div class="eyebrow reveal"><b>02</b> What we do</div>
+  <h2 class="title reveal">Complete power systems, <em>from cell to switchboard.</em></h2>
+  <p class="sub reveal">We manufacture the storage, integrate proven inverter platforms and deliver the whole system with our local engineering partner, so you deal with one team from survey to service.</p>
+  <div class="sol-grid">
+    <a class="sol wide reveal" href="solutions.html#storage">
+      <div class="sol-img"><img src="assets/img/storage-cabinets-wide.jpg" alt="Two YCDT Solar storage cabinets installed outdoors" loading="lazy" width="1280" height="960"></div>
+      <div class="sol-body"><span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="sol-n">01</div><h3>Battery energy storage</h3><p>Liquid-cooled LFP cabinets with 261 kWh each, IP66-rated for outdoor installation.</p></div>
+    </a>
+    <a class="sol wide reveal" href="solutions.html#hybrid">
+      <div class="sol-img"><img src="assets/img/growatt-inverter-mounting.jpg" alt="Hybrid inverter mounted on a storage cabinet during installation" loading="lazy" width="960" height="1280" style="object-position:50% 30%"></div>
+      <div class="sol-body"><span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="sol-n">02</div><h3>Hybrid solar systems</h3><p>PV, grid and battery managed in one box, for offices, estates and everyday loads.</p></div>
+    </a>
+    <a class="sol reveal" href="solutions.html#microgrid">
+      <div class="sol-img"><img src="assets/img/megarevo-pcs.jpg" alt="Microgrid power conversion system and battery cabinet" loading="lazy" width="1280" height="960"></div>
+      <div class="sol-body"><span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="sol-n">03</div><h3>Microgrid &amp; critical power</h3><p>Under 20 ms switchover and black start for labs, hospitals and cold chain.</p></div>
+    </a>
+    <a class="sol reveal" href="solutions.html#pv">
+      <div class="sol-img"><img src="assets/img/rooftop-array-02.jpg" alt="Rows of solar modules on an industrial rooftop" loading="lazy" width="960" height="1280"></div>
+      <div class="sol-body"><span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="sol-n">04</div><h3>Commercial rooftop PV</h3><p>Arrays designed around your roof, your loads and room to grow.</p></div>
+    </a>
+    <a class="sol reveal" href="solutions.html#service">
+      <div class="sol-img"><img src="assets/img/pv-combiner-boxes.jpg" alt="PV combiner boxes with dressed cabling" loading="lazy" width="960" height="1280"></div>
+      <div class="sol-body"><span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="sol-n">05</div><h3>Installation &amp; service</h3><p>Survey, customs clearance, commissioning and after-sales care on the ground.</p></div>
+    </a>
+  </div>
+</section>
+
+<!-- ============ INDUSTRIES ============ -->
+<div class="rule"></div>
+<section class="section" id="industries">
+  <div class="eyebrow reveal"><b>03</b> Who we power</div>
+  <h2 class="title reveal">Built for the places that can't go dark.</h2>
+  <div class="ind-grid reveal">
+    <div class="ind"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><h3>Residential estates</h3><p>Quiet, fuel-free power for estates and private homes, with storage sized for the night.</p></div>
+    <div class="ind"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5l8-2v18"/><path d="M12 9h8v12"/><path d="M7 8h2M7 12h2M7 16h2M15 13h2M15 17h2"/></svg><h3>Hotels &amp; hospitality</h3><p>Guests never hear a generator start. Cooling, kitchens and lifts stay on.</p></div>
+    <div class="ind"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V10l5 3V10l5 3V7l8 4v10z"/><path d="M7 17h2M12 17h2M17 17h2"/></svg><h3>Food &amp; manufacturing</h3><p>Steady supply for production lines, cold rooms and sensitive process equipment.</p></div>
+    <div class="ind"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 11c0-4 3-7 7-7 0 4-3 7-7 7z"/><path d="M12 14c0-3-2.5-5.5-6-5.5 0 3 2.5 5.5 6 5.5z"/><path d="M4 21h16"/></svg><h3>Agriculture</h3><p>Large farm and shed arrays powering pumps, poultry houses and processing.</p></div>
+    <div class="ind"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="1"/><path d="M8 7V4h8v3M3 12h18M10 12v2h4v-2"/></svg><h3>Commercial &amp; industrial</h3><p>Rooftop PV and storage that cut daytime grid and diesel costs for C&amp;I sites.</p></div>
+    <div class="ind"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9h14v12"/><path d="M12 3v6M9 6h6"/><path d="M9 13h6M12 13v5"/></svg><h3>Universities &amp; hospitals</h3><p>Two-tier designs: economical power for classrooms, UPS-grade power for wards and labs.</p></div>
+  </div>
+</section>
+
+<!-- ============ APPROACH ============ -->
+<div class="rule"></div>
+<section class="section" id="approach">
+  <div class="eyebrow reveal"><b>04</b> Our approach</div>
+  <h2 class="title reveal">Not every load can wait two seconds.</h2>
+  <div class="split">
+    <div class="reveal">
+      <p class="sub" style="margin-top:0">Most sites mix loads that can ride through a short switchover with loads that cannot. We size the hardware to the load instead of selling one inverter for everything, so you don't overpay for classrooms or under-protect a hospital.</p>
+      <div style="margin-top:28px"><a class="text-link" href="solutions.html#tiers">How two-tier design works <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    </div>
+    <div class="loads reveal">
+      <div class="load"><span class="load-bar" style="background:#6e6e73"></span><div><h4>Everyday loads</h4><p>Lights, fans, offices, classrooms. Served by hybrid inverters and storage cabinets.</p><span class="tol">Seconds of switchover is fine</span></div></div>
+      <div class="load"><span class="load-bar" style="background:#e9a23b"></span><div><h4>Sensitive loads</h4><p>Lab instruments, fridges, process control. A brief interruption ruins samples and data.</p><span class="tol">Needs seamless power</span></div></div>
+      <div class="load"><span class="load-bar" style="background:var(--accent)"></span><div><h4>Critical loads</h4><p>Patient monitoring, theatres, cold-chain medicines. Served by a microgrid PCS.</p><span class="tol">Under 20 ms · zero downtime</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED WORK ============ -->
+<div class="rule"></div>
+<section class="section" id="featured">
+  <div class="head-row">
+    <div>
+      <div class="eyebrow reveal"><b>05</b> In the field</div>
+      <h2 class="title reveal">Our work, on site.</h2>
+    </div>
+    <a class="text-link reveal" href="projects.html#gallery">Full gallery and videos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="strip">
+    <a class="reveal" href="projects.html#gallery"><img src="assets/img/rooftop-array-01.jpg" alt="Engineer on a commercial rooftop array" loading="lazy" width="960" height="1280"><span>Commercial rooftop array</span></a>
+    <a class="reveal" href="projects.html#gallery"><img src="assets/img/cabinet-growatt-engineer.jpg" alt="Engineer with a commissioned storage cabinet and hybrid inverter" loading="lazy" width="756" height="1008"><span>Storage + hybrid, commissioned</span></a>
+    <a class="reveal" href="projects.html#gallery"><img src="assets/img/storage-cabinets-install.jpg" alt="Storage cabinets being installed" loading="lazy" width="960" height="1280"><span>Cabinets going in</span></a>
+    <a class="reveal" href="projects.html#gallery"><img src="assets/img/lfp-modules-interior.jpg" alt="LFP battery modules inside a cabinet" loading="lazy" width="756" height="1008"><span>LFP modules, inside the cabinet</span></a>
+  </div>
+</section>
+
+<!-- ============ SAVINGS ============ -->
+<div class="rule"></div>
+<section class="section" id="savings">
+  <div class="eyebrow reveal"><b>06</b> The business case</div>
+  <h2 class="title reveal">What is diesel costing you?</h2>
+  <p class="sub reveal">Move the sliders to match your generator. The defaults are a 500 kW set burning 130 litres an hour.</p>
+  <div class="calc">
+    <div class="calc-panel reveal">
+      <h3>Today · diesel generator</h3>
+      <div class="big"><span id="o-year">₦600M</span> <small>/ year</small></div>
+      <div class="field-r"><label for="i-price">Diesel price per litre</label><output id="v-price" for="i-price">₦1,850</output><input type="range" id="i-price" min="900" max="3000" step="10" value="1850"></div>
+      <div class="field-r"><label for="i-lph">Consumption (litres / hour)</label><output id="v-lph" for="i-lph">130 L</output><input type="range" id="i-lph" min="5" max="300" step="5" value="130"></div>
+      <div class="field-r"><label for="i-hrs">Run time per day</label><output id="v-hrs" for="i-hrs">8 h</output><input type="range" id="i-hrs" min="1" max="24" step="1" value="8"></div>
+      <div class="field-r"><label for="i-days">Days per month</label><output id="v-days" for="i-days">26</output><input type="range" id="i-days" min="1" max="31" step="1" value="26"></div>
+      <div class="rows">
+        <div><span>Per hour</span><span id="o-hour">₦240,500</span></div>
+        <div><span>Per day</span><span id="o-day">₦1.92M</span></div>
+        <div><span>Per month</span><span id="o-month">₦50.0M</span></div>
+        <div class="yr"><span>Per year</span><span id="o-year2">₦600M</span></div>
+      </div>
+    </div>
+    <div class="calc-panel sun reveal">
+      <h3>With solar + storage</h3>
+      <div class="big">Near-zero <small>fuel</small></div>
+      <ul class="sun-list">
+        <li><b>Daytime</b>Solar powers your buildings directly and charges the battery.</li>
+        <li><b>Night / outage</b>The battery carries the load, starting with what matters most.</li>
+        <li><b>Battery life</b>6,000+ cycles on LFP chemistry.</li>
+        <li><b>Generator</b>Kept as the last resort instead of the daily supply.</li>
+      </ul>
+      <p class="fine">Your real saving depends on measured loads, tariffs and run hours. We give you a firm figure in the engineering proposal after a site survey.</p>
+      <div style="margin-top:24px"><a class="btn btn-primary" href="contact.html?interest=survey#enquiry">Get a site survey <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNERSHIP ============ -->
+<div class="rule"></div>
+<section class="section" id="partnership">
+  <div class="eyebrow reveal"><b>07</b> One team</div>
+  <h2 class="title reveal">Built in Hangzhou. <em>Installed and serviced in Lagos.</em></h2>
+  <div class="partners">
+    <article class="card reveal">
+      <span class="loc">Hangzhou, China</span>
+      <div class="card-tag">Manufacturer</div>
+      <h3>YCDT Solar</h3>
+      <p>Energy storage system integrator specialising in liquid-cooled battery cabinets, hybrid inverters and complete C&amp;I solar-plus-storage systems for Africa, Southeast Asia and the Middle East.</p>
+    </article>
+    <article class="card reveal">
+      <span class="loc">Lagos, Nigeria</span>
+      <div class="card-tag">Local partner</div>
+      <h3>Green Solar System</h3>
+      <p>Nigerian-registered engineering and installation company handling survey, procurement, customs clearance, commissioning and after-sales service across Lagos and Southwest Nigeria.</p>
+    </article>
+  </div>
+  <div class="handshake reveal">Factory to rooftop · one point of contact</div>
+  <div style="margin-top:32px;text-align:center" class="reveal"><a class="text-link" href="about.html">More about us <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<div class="rule"></div>
+<section class="section" id="process">
+  <div class="eyebrow reveal"><b>08</b> How it works</div>
+  <h2 class="title reveal">From first call to a working system.</h2>
+  <div class="steps">
+    <div class="step reveal"><div class="step-n">1</div><h3>Site load survey</h3><p>Our engineers record connected loads, peak demand and existing generator specs at your site.</p></div>
+    <div class="step reveal"><div class="step-n">2</div><h3>Engineering proposal</h3><p>Bill of quantities, single-line diagrams, equipment schedule and firm pricing, building by building.</p></div>
+    <div class="step reveal"><div class="step-n">3</div><h3>Delivery &amp; installation</h3><p>We ship, clear customs, install and commission, in phases if that suits your budget.</p></div>
+    <div class="step reveal"><div class="step-n">4</div><h3>Monitoring &amp; service</h3><p>Cloud monitoring, fault alarms and local after-sales support for the life of the system.</p></div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="section" style="padding-top:0">
+  <div class="cta reveal">
+    <div class="eyebrow">Get started</div>
+    <h2 class="title">Tell us about your site. We'll show you what it could save.</h2>
+    <p class="sub">Send a short enquiry and an engineer will follow up to arrange a load survey.</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="contact.html#enquiry">Make an enquiry <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost" href="projects.html">See our projects</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="foot">
+    <div class="foot-brand">
+      <a class="brand-mark" href="index.html" aria-label="YCDT Solar home">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.8" fill="#e5484d"/><path d="M2.5 20 6.5 9.5h11L13.5 20z" fill="#fff"/><path d="M4.5 14.75h11M10.2 9.5 8 20M14.1 9.5 11.9 20" stroke="#151517" stroke-width="1.1"/></svg>
+        <span class="brand-name">YCDT<i>solar</i></span>
+      </a>
+      <p>Battery storage, hybrid solar and microgrid systems, engineered for weak grids. Installed and serviced in Nigeria by Green Solar System.</p>
+    </div>
+    <div><h4>Company</h4><ul><li><a href="about.html">About us</a></li><li><a href="projects.html">Projects</a></li><li><a href="contact.html">Contact</a></li><li><a href="contact.html#faq">FAQ</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="solutions.html#storage">Battery storage</a></li><li><a href="solutions.html#hybrid">Hybrid systems</a></li><li><a href="solutions.html#microgrid">Microgrid &amp; critical power</a></li><li><a href="solutions.html#pv">Rooftop PV</a></li><li><a href="solutions.html#service">Installation &amp; service</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul>
+      <li><a href="contact.html#enquiry">Make an enquiry</a></li>
+      <li data-contact-wrap="email" hidden><a data-contact="email" href="#"></a></li>
+      <li data-contact-wrap="phone" hidden><a data-contact="phone" href="#"></a></li>
+      <li data-contact-wrap="whatsapp" hidden><a data-contact="whatsapp" href="#">WhatsApp us</a></li>
+      <li style="color:var(--dim);font-size:15px">Hangzhou, China<br>Lagos, Nigeria</li>
+    </ul></div>
+  </div>
+  <div class="foot-base"><span>© <span data-year>2026</span> YCDT Solar · Green Solar System</span><span>Solar + storage, engineered for weak grids.</span></div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script>
+  // If the 3D module can't load (old browser, offline CDN), fall back to a photo.
+  setTimeout(function () { if (!window.__panelReady) { document.querySelector('.hero .stage').classList.add('fallback'); var t = document.querySelector('.view-toggle'); if (t) t.classList.add('gone'); } }, 8000);
+</script>
+<script type="module">
+/*
+ * YCDT Solar — hero: a real-time 3D solar module that explodes into its components.
+ * three.js 0.160 (loaded through the page's import map).
+ *
+ * Talks to site.js through DOM events:
+ *   in : 'panel:select'   (detail = component id)  — a hero tab was clicked
+ *   out: 'panel:selected' (detail = component id)  — a label / layer was picked, or the idle tour moved on
+ */
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const stage = document.querySelector('.hero .stage');
+const canvas = document.getElementById('gl');
+const svg = stage.querySelector('.leaders');
+const labelBox = stage.querySelector('.plabels');
+const copyEl = document.querySelector('.hero .copy');
+const heroEl = document.querySelector('.hero');
+const toggles = Array.from(document.querySelectorAll('.view-toggle button'));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DEG = Math.PI / 180;
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+/* ------------------------------------------------------------------ */
+/* Component stack, top (sun side) to bottom                          */
+/* ------------------------------------------------------------------ */
+const PW = 2.0, PH = 1.0;                       // module 2:1, landscape
+const COMPONENTS = [
+  { id: 'frame',     n: '01', name: 'Aluminium frame', L: 3 },
+  { id: 'glass',     n: '02', name: 'Tempered glass',  L: 2 },
+  { id: 'eva',       n: '03', name: 'EVA encapsulant', L: 1 },
+  { id: 'cells',     n: '04', name: 'Solar cells',     L: 0 },
+  { id: 'eva',       n: '',   name: '',                L: -1, sub: true },
+  { id: 'backsheet', n: '05', name: 'Backsheet',       L: -2 },
+  { id: 'jbox',      n: '06', name: 'Junction box',    L: -3 },
+];
+const ORDER = ['frame', 'glass', 'eva', 'cells', 'backsheet', 'jbox'];
+
+/* ------------------------------------------------------------------ */
+/* Cell texture: 144 half-cut mono cells, busbars, fingers, ribbons   */
+/* ------------------------------------------------------------------ */
+function cellTexture(maxAniso){
+  const W = 4096, H = 2048, c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.fillStyle = '#d9dde3'; x.fillRect(0, 0, W, H);          // backsheet showing through the gaps
+  const cols = 24, rows = 6, m = 46, gx = 9, gy = 16, split = 34;
+  const cw = (W - 2 * m - (cols - 1) * gx - (split - gx)) / cols;
+  const ch = (H - 2 * m - (rows - 1) * gy) / rows;
+  const cham = ch * .075, BUS = 10;
+  const cellX = col => m + col * (cw + gx) + (col >= cols / 2 ? split - gx : 0);
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  for (let r = 0; r < rows; r++) for (let col = 0; col < cols; col++) {
+    const x0 = cellX(col), y0 = m + r * (ch + gy), left = col % 2 === 0;
+    x.save();
+    x.beginPath();                                           // half-cell with chamfers on its outer corners
+    if (left) {
+      x.moveTo(x0 + cham, y0); x.lineTo(x0 + cw, y0); x.lineTo(x0 + cw, y0 + ch); x.lineTo(x0 + cham, y0 + ch);
+      x.lineTo(x0, y0 + ch - cham); x.lineTo(x0, y0 + cham);
+    } else {
+      x.moveTo(x0, y0); x.lineTo(x0 + cw - cham, y0); x.lineTo(x0 + cw, y0 + cham); x.lineTo(x0 + cw, y0 + ch - cham);
+      x.lineTo(x0 + cw - cham, y0 + ch); x.lineTo(x0, y0 + ch);
+    }
+    x.closePath(); x.clip();
+    const v = rnd() * 6;
+    const g = x.createLinearGradient(x0, y0, x0 + cw, y0 + ch);
+    g.addColorStop(0, `rgb(${16 + v},${28 + v},${58 + v})`);
+    g.addColorStop(1, `rgb(${8 + v},${15 + v},${36 + v})`);
+    x.fillStyle = g; x.fillRect(x0, y0, cw, ch);
+    x.strokeStyle = 'rgba(150,170,205,.13)'; x.lineWidth = 1;   // fingers
+    x.beginPath();
+    for (let fx = x0 + 3; fx < x0 + cw; fx += 7) { x.moveTo(fx, y0); x.lineTo(fx, y0 + ch); }
+    x.stroke();
+    x.restore();
+  }
+  // busbars run along each string and bridge the gaps as ribbons
+  x.strokeStyle = 'rgba(214,220,230,.78)'; x.lineWidth = 2.4;
+  for (let r = 0; r < rows; r++) {
+    const y0 = m + r * (ch + gy);
+    for (let b = 0; b < BUS; b++) {
+      const y = y0 + ch * (b + .5) / BUS;
+      x.beginPath(); x.moveTo(cellX(0) - 14, y); x.lineTo(cellX(11) + cw + 4, y); x.stroke();
+      x.beginPath(); x.moveTo(cellX(12) - 4, y); x.lineTo(cellX(23) + cw + 14, y); x.stroke();
+    }
+  }
+  // end and centre bus ribbons
+  x.fillStyle = '#c9ced6';
+  [[m - 26, 12], [W - m + 14, 12], [W / 2 - 13, 8], [W / 2 + 5, 8]].forEach(([bx, bw]) => x.fillRect(bx, m - 10, bw, H - 2 * m + 20));
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxAniso;
+  return t;
+}
+
+function dotTexture(){
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.35, 'rgba(255,255,255,.5)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = g; x.fillRect(0, 0, 64, 64);
+  return new THREE.CanvasTexture(c);
+}
+
+/* ------------------------------------------------------------------ */
+/* Scene                                                              */
+/* ------------------------------------------------------------------ */
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+} catch (e) {
+  stage.classList.add('fallback');
+  document.querySelector('.view-toggle')?.classList.add('gone');
+  throw e;
+}
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.setClearColor(0x000000, 0);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+pmrem.dispose();
+
+const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+const SUN = new THREE.Vector3(0.62, 0.72, 0.32).normalize();
+const sun = new THREE.DirectionalLight(0xfff0d8, 2.6); sun.position.copy(SUN).multiplyScalar(6); scene.add(sun);
+const rim = new THREE.DirectionalLight(0x9db8ff, .7); rim.position.set(-4, 1.5, -3); scene.add(rim);
+scene.add(new THREE.HemisphereLight(0x8fa8ff, 0x1a1410, .35));
+
+const root = new THREE.Group(); scene.add(root);
+const tilt = new THREE.Group(); tilt.rotation.x = -0.98; root.add(tilt);
+const BASE_YAW = -0.42;
+root.rotation.y = BASE_YAW;
+
+const outlineMat = () => new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false });
+function rectOutline(w, h, z){
+  const g = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-w / 2, -h / 2, z), new THREE.Vector3(w / 2, -h / 2, z), new THREE.Vector3(w / 2, h / 2, z), new THREE.Vector3(-w / 2, h / 2, z)
+  ]);
+  return new THREE.LineLoop(g, outlineMat());
+}
+
+const layers = [];
+const pickables = [];
+function addLayer(def, obj, baseZ, explodeVec, anchor, outline){
+  const g = new THREE.Group();
+  g.add(obj);
+  if (outline) g.add(outline);
+  g.position.z = baseZ;
+  tilt.add(g);
+  obj.traverse(o => { if (o.isMesh) { o.userData.id = def.id; pickables.push(o); } });
+  const L = { ...def, group: g, baseZ, explode: explodeVec, anchor, outline, lift: 0, sel: 0 };
+  layers.push(L);
+  return L;
+}
+const stackVec = L => new THREE.Vector3(L * 0.05, L * 0.115, L * 0.165);
+
+// 01 frame
+const fw = 0.026, fd = 0.036, ow = PW + 0.024, oh = PH + 0.024;
+const frameMat = new THREE.MeshStandardMaterial({ color: 0xc8ced6, metalness: 1, roughness: .28 });
+const frameGroup = new THREE.Group();
+[[ow, fw, 0, oh / 2 - fw / 2], [ow, fw, 0, -oh / 2 + fw / 2], [fw, oh - 2 * fw, -ow / 2 + fw / 2, 0], [fw, oh - 2 * fw, ow / 2 - fw / 2, 0]]
+  .forEach(([w, h, px, py]) => { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, fd), frameMat); b.position.set(px, py, -0.004); frameGroup.add(b); });
+addLayer(COMPONENTS[0], frameGroup, 0, stackVec(3), new THREE.Vector3(ow / 2, -oh / 2, 0.014), rectOutline(ow + .02, oh + .02, 0.014));
+
+// 02 glass — additive so only its reflections show, plus a faint tint and edges
+const glassMat = new THREE.MeshPhysicalMaterial({ color: 0x000000, roughness: .05, metalness: 0, clearcoat: 1, clearcoatRoughness: .03,
+  envMapIntensity: 1.0, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+const glass = new THREE.Group();
+const glassBox = new THREE.BoxGeometry(PW, PH, .005);
+glass.add(new THREE.Mesh(glassBox, glassMat));
+const glassTint = new THREE.Mesh(new THREE.PlaneGeometry(PW, PH), new THREE.MeshBasicMaterial({ color: 0x9cc3ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+glassTint.position.z = .0026; glass.add(glassTint);
+const glassEdges = new THREE.LineSegments(new THREE.EdgesGeometry(glassBox), new THREE.LineBasicMaterial({ color: 0xcfe2ff, transparent: true, opacity: .15, depthWrite: false }));
+glass.add(glassEdges);
+addLayer(COMPONENTS[1], glass, 0.009, stackVec(2), new THREE.Vector3(PW / 2, -PH / 2, .0025), rectOutline(PW + .02, PH + .02, .0025));
+
+// 03 / 03b EVA
+function evaSheet(){
+  const g = new THREE.Group();
+  const m = new THREE.Mesh(new THREE.BoxGeometry(PW, PH, .0016), new THREE.MeshStandardMaterial({ color: 0xeef3fb, roughness: .55, transparent: true, opacity: .04, depthWrite: false }));
+  g.add(m);
+  g.userData.mat = m.material;
+  return g;
+}
+const evaF = evaSheet(), evaR = evaSheet();
+addLayer(COMPONENTS[2], evaF, 0.0055, stackVec(1), new THREE.Vector3(PW / 2, -PH / 2, .0008), rectOutline(PW + .02, PH + .02, .0008));
+addLayer(COMPONENTS[4], evaR, 0.0015, stackVec(-1), new THREE.Vector3(PW / 2, -PH / 2, .0008), rectOutline(PW + .02, PH + .02, .0008));
+
+// 04 cells
+const cellMat = new THREE.MeshPhysicalMaterial({ map: cellTexture(renderer.capabilities.getMaxAnisotropy()), metalness: .1, roughness: .42, envMapIntensity: .32,
+  clearcoat: .5, clearcoatRoughness: .12, side: THREE.DoubleSide, emissive: new THREE.Color(0x000000) });
+const cells = new THREE.Mesh(new THREE.PlaneGeometry(PW - .004, PH - .004), cellMat);
+addLayer(COMPONENTS[3], cells, 0.0035, stackVec(0), new THREE.Vector3(PW / 2, -PH / 2, 0), rectOutline(PW + .02, PH + .02, 0));
+
+// 05 backsheet
+const back = new THREE.Mesh(new THREE.BoxGeometry(PW, PH, .003), new THREE.MeshStandardMaterial({ color: 0xdcdfe4, roughness: .8, envMapIntensity: .55 }));
+addLayer(COMPONENTS[5], back, -0.001, stackVec(-2), new THREE.Vector3(PW / 2, -PH / 2, .0015), rectOutline(PW + .02, PH + .02, .0015));
+
+// 06 junction box + MC4 leads (mounted on the back, near the top edge)
+const jbox = new THREE.Group();
+const jbBody = new THREE.Mesh(new THREE.BoxGeometry(.22, .13, .028), new THREE.MeshStandardMaterial({ color: 0x24262c, roughness: .42, metalness: .1 }));
+jbox.add(jbBody);
+const jbLid = new THREE.Mesh(new THREE.BoxGeometry(.18, .095, .006), new THREE.MeshStandardMaterial({ color: 0x31343b, roughness: .35 }));
+jbLid.position.z = -.016; jbox.add(jbLid);
+const cableMat = new THREE.MeshStandardMaterial({ color: 0x111214, roughness: .55 });
+const mc4Mat = new THREE.MeshStandardMaterial({ color: 0x1b1c20, roughness: .4 });
+[[1, 0xe5484d], [-1, 0x3e7bfa]].forEach(([s, collar]) => {
+  const curve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(s * .11, 0, -.004), new THREE.Vector3(s * .2, -.01, -.02), new THREE.Vector3(s * .33, -.04, -.035), new THREE.Vector3(s * .46, -.03, -.03)
+  ]);
+  jbox.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 24, .0075, 10), cableMat));
+  const conn = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, .075, 16), mc4Mat);
+  conn.rotation.z = Math.PI / 2; conn.position.set(s * .495, -.03, -.03); jbox.add(conn);
+  const ring = new THREE.Mesh(new THREE.CylinderGeometry(.0135, .0135, .01, 16), new THREE.MeshStandardMaterial({ color: collar, roughness: .4 }));
+  ring.rotation.z = Math.PI / 2; ring.position.set(s * .47, -.03, -.03); jbox.add(ring);
+});
+jbox.position.set(0, PH * .3, -0.0165); jbox.scale.setScalar(1.3);
+const jbOutline = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(.24, .15, .03)), outlineMat());
+jbOutline.position.copy(jbox.position);
+const jbLayer = addLayer(COMPONENTS[6], jbox, 0, new THREE.Vector3(.25, -0.98, -0.42), new THREE.Vector3(.11, PH * .3 - .065, -.0025), jbOutline);
+jbLayer.group.position.z = 0;
+
+// sun motes drifting down the light toward the module
+const MOTES = 170;
+const motePos = new Float32Array(MOTES * 3), moteT = new Float32Array(MOTES), moteOff = [];
+const sideA = new THREE.Vector3().crossVectors(SUN, new THREE.Vector3(0, 1, 0)).normalize();
+const sideB = new THREE.Vector3().crossVectors(SUN, sideA).normalize();
+for (let i = 0; i < MOTES; i++) { moteT[i] = Math.random(); moteOff.push([(Math.random() * 2 - 1) * 1.3, (Math.random() * 2 - 1) * .9, .3 + Math.random() * .7]); }
+const moteGeo = new THREE.BufferGeometry(); moteGeo.setAttribute('position', new THREE.BufferAttribute(motePos, 3));
+const motes = new THREE.Points(moteGeo, new THREE.PointsMaterial({ map: dotTexture(), size: .028, color: 0xffe0b0, transparent: true, opacity: .55,
+  blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true }));
+scene.add(motes);
+
+/* ------------------------------------------------------------------ */
+/* Labels                                                             */
+/* ------------------------------------------------------------------ */
+const labelLayers = layers.filter(l => !l.sub);
+labelLayers.forEach(l => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'plabel'; b.tabIndex = -1;
+  b.innerHTML = `<b>${l.n}</b><span>${l.name}</span>`;
+  b.addEventListener('click', () => { select(l.id, true); interact(); });
+  b.addEventListener('mouseenter', () => { if (!mobile) { select(l.id, true); interact(); } });
+  labelBox.appendChild(b);
+  const path = document.createElementNS(SVGNS, 'path');
+  const dot = document.createElementNS(SVGNS, 'circle'); dot.setAttribute('r', '2.5');
+  svg.append(path, dot);
+  Object.assign(l, { el: b, path, dot, w: 0 });
+});
+
+/* ------------------------------------------------------------------ */
+/* State + interaction                                                */
+/* ------------------------------------------------------------------ */
+let W = 1, H = 1, mobile = false, dist = 6;
+let explode = reduce ? 1 : 0, explodeT = reduce ? 1 : 0, userToggled = false;
+let selected = 'cells';
+const orb = [0, 0], orbT = [0, 0];
+let lastInteract = -1e9, lastTour = 0;
+
+function interact(){ lastInteract = performance.now(); }
+function select(id, announce){
+  selected = id;
+  if (explodeT < .5 && !userToggled) setExplode(true);
+  if (announce) document.dispatchEvent(new CustomEvent('panel:selected', { detail: id }));
+}
+function setExplode(on, byUser){
+  explodeT = on ? 1 : 0;
+  if (byUser) userToggled = true;
+  toggles.forEach(b => b.setAttribute('aria-pressed', (b.dataset.view === 'exploded') === on ? 'true' : 'false'));
+}
+toggles.forEach(b => b.addEventListener('click', () => { setExplode(b.dataset.view === 'exploded', true); interact(); }));
+document.addEventListener('panel:select', e => { select(e.detail, false); interact(); });
+
+addEventListener('pointermove', e => {
+  if (!e.isPrimary || e.pointerType !== 'mouse') return;
+  const r = stage.getBoundingClientRect();
+  orbT[0] = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+  orbT[1] = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+}, { passive: true });
+document.documentElement.addEventListener('pointerleave', () => { orbT[0] = orbT[1] = 0; });
+
+// click a layer in 3D
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let downAt = null;
+function pick(e){
+  const r = stage.getBoundingClientRect();
+  ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const hit = ray.intersectObjects(pickables, false)[0];
+  return hit ? hit.object.userData.id : null;
+}
+stage.addEventListener('pointerdown', e => { downAt = [e.clientX, e.clientY]; });
+stage.addEventListener('pointerup', e => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
+  const id = pick(e);
+  if (id) { select(id, true); interact(); }
+});
+let hoverTick = 0;
+stage.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse' || ++hoverTick % 3) return;
+  stage.style.cursor = pick(e) ? 'pointer' : '';
+});
+
+/* ------------------------------------------------------------------ */
+/* Layout                                                             */
+/* ------------------------------------------------------------------ */
+function layout(){
+  const r = stage.getBoundingClientRect();
+  W = Math.max(1, r.width); H = Math.max(1, r.height);
+  mobile = W < 820;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  renderer.setPixelRatio(mobile ? Math.min(dpr, 1.75) : dpr);
+  renderer.setSize(W, H, false);
+  camera.aspect = W / H;
+  let px, py, frac, needH;
+  if (!mobile) {
+    frac = W < 1100 ? .52 : .58;
+    px = W * (W < 1100 ? .68 : .655); py = H * .52;
+    needH = 3.1 / .82;
+  } else {
+    const cb = copyEl.getBoundingClientRect().bottom - r.top;
+    frac = .98;
+    px = W * .47; py = cb + (H - cb - 50) * .52;
+    needH = 2.5 * H / Math.max(220, H - cb - 70);
+  }
+  const visW = (mobile ? 2.55 : 3.0) / frac;
+  const visH = Math.max(visW / camera.aspect, needH);
+  dist = visH / (2 * Math.tan(camera.fov * DEG / 2));
+  camera.setViewOffset(W, H, W / 2 - px, H / 2 - py, W, H);
+  labelLayers.forEach(l => { l.w = l.el.offsetWidth; });
+}
+
+/* ------------------------------------------------------------------ */
+/* Loop                                                               */
+/* ------------------------------------------------------------------ */
+const v3 = new THREE.Vector3(), SUN_COL = new THREE.Color(0xf5b544), WHITE = new THREE.Color(0xffffff);
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+let running = true, raf = 0, last = performance.now(), t0 = last, tourIdx = ORDER.indexOf('cells');
+
+function frame(now){
+  raf = 0;
+  const dt = Math.min(.1, (now - last) / 1000); last = now;
+  const time = (now - t0) / 1000;
+
+  // idle tour through the components
+  if (!reduce && explodeT > .5 && now - lastInteract > 9000 && now - lastTour > 3800) {
+    lastTour = now; tourIdx = (ORDER.indexOf(selected) + 1) % ORDER.length;
+    select(ORDER[tourIdx], true);
+  }
+
+  const k = 1 - Math.pow(1 - .06, dt * 60), kc = 1 - Math.pow(1 - .07, dt * 60);
+  explode += (explodeT - explode) * k;
+  const e = ease(Math.min(1, Math.max(0, explode)));
+  if (mobile || reduce) { orbT[0] = 0; orbT[1] = 0; }
+  orb[0] += (orbT[0] - orb[0]) * kc; orb[1] += (orbT[1] - orb[1]) * kc;
+
+  // camera orbit + gentle float
+  const yaw = orb[0] * 9 * DEG, pitch = (8 - orb[1] * 5) * DEG;
+  camera.position.set(dist * Math.sin(yaw) * Math.cos(pitch), dist * Math.sin(pitch), dist * Math.cos(yaw) * Math.cos(pitch));
+  camera.lookAt(0, 0, 0);
+  if (!reduce) {
+    root.position.y = Math.sin(time * .7) * .025;
+    root.rotation.y = BASE_YAW + Math.sin(time * .23) * (mobile ? .09 : .04);
+  }
+
+  // layers
+  for (const l of layers) {
+    const isSel = l.id === selected;
+    l.sel += ((isSel ? 1 : 0) - l.sel) * k;
+    l.lift = l.sel * e;
+    l.group.position.set(l.explode.x * e, l.explode.y * e, l.baseZ + l.explode.z * e + l.lift * .06);
+    if (l.outline) {
+      l.outline.material.opacity = e * (.1 + .8 * l.sel);
+      l.outline.material.color.copy(WHITE).lerp(SUN_COL, l.sel);
+    }
+  }
+  evaF.userData.mat.opacity = evaR.userData.mat.opacity = .03 + .09 * e + .08 * layers[2].sel * e;
+  glassTint.material.opacity = .015 + .05 * e + .05 * layers[1].sel * e;
+  glassEdges.material.opacity = .12 + .35 * e;
+  const pulse = (.5 + .5 * Math.sin(time * 3)) * layers[3].sel * e;
+  cellMat.emissive.setRGB(.02 * pulse, .06 * pulse, .16 * pulse);
+
+  // motes
+  for (let i = 0; i < MOTES; i++) {
+    if (!reduce) { moteT[i] -= dt * .035 * moteOff[i][2]; if (moteT[i] < 0) moteT[i] += 1; }
+    const d = .3 + moteT[i] * 3.6, o = moteOff[i];
+    v3.copy(SUN).multiplyScalar(d).addScaledVector(sideA, o[0] * (.4 + moteT[i])).addScaledVector(sideB, o[1] * (.4 + moteT[i]));
+    motePos[i * 3] = v3.x; motePos[i * 3 + 1] = v3.y; motePos[i * 3 + 2] = v3.z;
+  }
+  moteGeo.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+  if (!window.__panelReady) { window.__panelReady = true; stage.classList.remove('fallback'); document.querySelector('.view-toggle')?.classList.remove('gone'); }
+
+  // labels + leader lines
+  root.updateMatrixWorld();
+  const pts = labelLayers.map(l => {
+    v3.copy(l.anchor); l.group.localToWorld(v3); v3.project(camera);
+    return { l, ax: (v3.x * .5 + .5) * W, ay: (.5 - v3.y * .5) * H };
+  }).sort((a, b) => a.ay - b.ay);
+  const gap = mobile ? 26 : 30;
+  let prev = -1e9;
+  for (const p of pts) { p.ly = Math.max(p.ay, prev + gap); prev = p.ly; }
+  const vis = Math.max(0, (e - .55) / .45);
+  for (const p of pts) {
+    const off = mobile ? 14 : 34;
+    const lx = Math.min(p.ax + off, W - p.l.w - 8);
+    p.l.el.style.transform = `translate(${lx.toFixed(1)}px,${(p.ly - 13).toFixed(1)}px)`;
+    p.l.el.style.opacity = vis;
+    p.l.el.style.visibility = vis < .02 ? 'hidden' : 'visible';
+    const on = p.l.id === selected;
+    p.l.el.classList.toggle('on', on);
+    p.l.path.setAttribute('d', `M${p.ax.toFixed(1)} ${p.ay.toFixed(1)} L${(lx - 2).toFixed(1)} ${p.ly.toFixed(1)}`);
+    p.l.path.style.opacity = vis; p.l.dot.style.opacity = vis;
+    p.l.path.classList.toggle('on', on); p.l.dot.classList.toggle('on', on);
+    p.l.dot.setAttribute('cx', p.ax.toFixed(1)); p.l.dot.setAttribute('cy', p.ay.toFixed(1));
+  }
+
+  if (running) raf = requestAnimationFrame(frame);
+}
+
+layout();
+let rz = 0;
+addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(layout, 60); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+if (!reduce) setTimeout(() => { if (!userToggled) setExplode(true); }, 1200);
+else setExplode(true);
+
+new IntersectionObserver(es => {
+  running = es[0].isIntersecting;
+  if (running && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+}).observe(heroEl);
+raf = requestAnimationFrame(frame);
+</script>
+</body>
+</html>
