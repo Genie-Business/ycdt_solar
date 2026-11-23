@@ -45,7 +45,7 @@ export function isAuthed(req) {
 }
 
 /* Only these files can ever be read or written through the admin. */
-const PAGES = /^(index|solutions|projects|about|contact)\.html$/;
+const PAGES = /^(index|solutions|automation|metering|projects|about|contact)\.html$/;
 const SETTINGS = 'assets/js/settings.js';
 const UPLOAD = /^assets\/img\/uploads\/[a-z0-9][a-z0-9._-]*\.(jpg|jpeg|png|webp)$/;
 export const readable = p => PAGES.test(p) || p === SETTINGS;

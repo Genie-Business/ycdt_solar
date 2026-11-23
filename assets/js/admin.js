@@ -5,10 +5,10 @@
   const MAX_IMG = 1800, MAX_BATCH = 3.4e6;   // Vercel functions accept about 4.5 MB per request
 
   // Text that can be edited in place (only the innermost match on any branch is used)
-  const EDITABLE = 'h1,h2,h3,h4,h5,p,li,summary,th,td,figcaption,legend,.eyebrow,.stat-l,.stat-n,.big,.btn,.text-link,.tol,.when,.loc,.card-tag,.step-n,.sol-n,.n,.flow span,.sites span,.trusted-track span,.trusted-label,.badge,.strip span,.tab,.cmd-text,.reason b,.reason span,.specs li>span,.case-nums b,.case-nums span,.rows div>span:first-child,.sun-list b,.field>label,.checks span,.tabs-label,.lede span,.side-card small,.crumbs span:last-child';
-  const NOT_EDITABLE = '.stage,.view-toggle,[aria-hidden="true"],.req,[data-count-out],#o-year,#o-year2,#o-hour,#o-day,#o-month,.field output,.form-status,.err';
+  const EDITABLE = 'h1,h2,h3,h4,h5,p,li,summary,th,td,figcaption,legend,.eyebrow,.stat-l,.stat-n,.big,.btn,.text-link,.tol,.when,.loc,.card-tag,.step-n,.sol-n,.n,.flow span,.sites span,.trusted-track span,.trusted-label,.badge,.strip span,.tab,.cmd-text,.reason b,.reason span,.specs li>span,.case-nums b,.case-nums span,.rows div>span:first-child,.sun-list b,.field>label,.checks span,.tabs-label,.lede span,.side-card small,.crumbs span:last-child,.need-chips span,.need-go,.flow-h,.flow-node span,.flow-node b,.tl-n,.pair div,.ess-title';
+  const NOT_EDITABLE = '.meter-art,.stage,.view-toggle,[aria-hidden="true"],.req,[data-count-out],#o-year,#o-year2,#o-hour,#o-day,#o-month,.field output,.form-status,.err';
   // Items that can be duplicated, deleted and reordered
-  const REPEAT = '.ess-part,.shot,.case,.strip>a,.sol,.ind,.value,.market,.service,.step,.reason,.faq details,.specs li,.sun-list li,.side-card li,.sites span,.flow span,.trusted-track:first-of-type span,.load,tbody tr,.film';
+  const REPEAT = '.need,.need-chips span,.flow-node,.timeline li,.ess-part,.shot,.case,.strip>a,.sol,.ind,.value,.market,.service,.step,.reason,.faq details,.specs li,.sun-list li,.side-card li,.sites span,.flow span,.trusted-track:first-of-type span,.load,tbody tr,.film';
 
   let page = 'index.html', source = '', doc = null;
   let dirty = false, uploads = new Map(), seo = null, fileCb = null;
