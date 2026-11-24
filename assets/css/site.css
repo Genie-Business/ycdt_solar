@@ -569,3 +569,30 @@ a.ind:hover h3{color:var(--accent)}
 @keyframes dashv{to{background-position:0 14px}}
 @media (max-width:640px){.needs{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.flow-arrow{animation:none}}
+
+/* ===== calmer photo framing ===== */
+/* labels on photos: light pill instead of a dark blob */
+.badge{color:var(--ink);background:rgba(255,255,255,.92);border:0;box-shadow:0 2px 10px rgba(0,0,0,.12);backdrop-filter:none;-webkit-backdrop-filter:none;letter-spacing:.08em;font-weight:500;left:14px;top:14px;font-size:11px}
+/* two photos side by side instead of one pasted over the other */
+.feature-media.duo{display:grid;grid-template-columns:1.55fr 1fr;gap:12px;border:0;background:none;overflow:visible}
+.feature-media.duo>img{border-radius:18px;border:1px solid var(--line);height:100%;min-height:0}
+.feature-media.duo .inset{position:static;width:auto;border-radius:18px;border:1px solid var(--line);box-shadow:none}
+.feature-media.duo .inset img{width:100%;height:100%;object-fit:cover}
+.feature-media{box-shadow:0 1px 2px rgba(0,0,0,.04)}
+/* gallery: one tidy grid of equal tiles (the lightbox still shows each photo whole) */
+.gallery{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.shot{margin:0;aspect-ratio:4/5;border:1px solid var(--line)}
+.shot img{height:100%;object-fit:cover}
+/* inner page heroes: text left, a framed photo right (no faded photo behind the words) */
+.page-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(28px,4vw,72px);align-items:center;padding:calc(64px + clamp(40px,6vw,80px)) max(var(--gutter),calc((100% - var(--max)) / 2 + var(--gutter))) clamp(48px,6vw,80px)}
+.page-hero-in{max-width:none;margin:0;grid-column:1;grid-row:1}
+.page-hero-bg{position:relative;inset:auto;z-index:auto;grid-column:2;grid-row:1;aspect-ratio:5/6;max-height:72vh;width:100%;border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.10)}
+.page-hero-bg img{opacity:1;filter:none}
+.page-hero-bg::after{display:none}
+.page-hero h1{font-size:clamp(44px,5.6vw,88px)}
+.meter-hero{display:block}
+@media (max-width:820px){
+  .page-hero{grid-template-columns:1fr}
+  .page-hero-bg{grid-column:1;grid-row:2;aspect-ratio:16/10;max-height:none;border-radius:18px}
+  .feature-media.duo{grid-template-columns:1.4fr 1fr;gap:8px}
+}
